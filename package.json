@@ -2,24 +2,44 @@
   "name": "hv-react-calendar",
   "version": "0.1.0",
   "description": "Fancy calendar component for use with ReactJS.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "modules/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/HireVue/hv-react-calendar.git"
   },
-  "keywords": [
-    "calendar",
-    "widget",
-    "react",
-    "component",
-    "month-view"
-  ],
-  "author": "E Brent Nelson <bnelson@hirevue.com>",
-  "license": "MIT",
+  "homepage": "https://github.com/HireVue/hv-react-calendar/blob/master/README.md",
   "bugs": {
     "url": "https://github.com/HireVue/hv-react-calendar/issues"
-  }
+  },
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "build": "NODE_ENV=production webpack index.js dist/hv-react-calendar.js",
+    "build-min": "NODE_ENV=production COMPRESS=1 webpack index.js dist/hv-react-calendar.min.js",
+    "examples": "webpack-dev-server --config examples/webpack.config.js --no-info --content-base examples",
+    "test": "jsxhint . && karma start"
+  },
+  "author": "E Brent Nelson",
+  "license": "MIT",
+  "devDependencies": {
+    "karma-firefox-launcher": "~0.1.4",
+    "karma-chrome-launcher": "~0.1.7",
+    "expect": "~1.4.0",
+    "karma-sourcemap-loader": "~0.3.2",
+    "karma-cli": "0.0.4",
+    "webpack": "~1.5.3",
+    "react": "~0.12.2",
+    "bundle-loader": "~0.5.3",
+    "jsxhint": "~0.9.0",
+    "karma-webpack": "~1.5.0",
+    "jsx-loader": "~0.12.2",
+    "webpack-dev-server": "~1.7.0",
+    "karma": "~0.12.31"
+  },
+  "keywords": [
+    "react",
+    "calendar",
+    "widget"
+  ]
 }
