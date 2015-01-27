@@ -1,10 +1,5 @@
-var fs      = require('fs');
 var path    = require('path');
 var webpack = require('webpack');
-
-function isDirectory(dir) {
-  return fs.lstatSync(dir).isDirectory();
-}
 
 module.exports = {
 
@@ -29,7 +24,7 @@ module.exports = {
 
   resolve: {
     alias: {
-      'hv-react-calendar': '../modules/index'
+      'hv-react-calendar': '../modules/HvReactCalendar'
     }
   },
 

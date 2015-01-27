@@ -2,7 +2,7 @@
   "name": "hv-react-calendar",
   "version": "0.1.0",
   "description": "Fancy calendar component for use with ReactJS.",
-  "main": "modules/index.js",
+  "main": "modules/HvReactCalendar.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/HireVue/hv-react-calendar.git"
@@ -15,8 +15,8 @@
     "example": "examples"
   },
   "scripts": {
-    "build": "NODE_ENV=production webpack --progress --colors modules/index.js dist/hv-react-calendar.js",
-    "build-min": "NODE_ENV=production COMPRESS=1 webpack --progress --colors modules/index.js dist/hv-react-calendar.min.js",
+    "build": "NODE_ENV=production webpack --progress --colors modules/HvReactCalendar.js dist/hv-react-calendar.js",
+    "build-min": "NODE_ENV=production COMPRESS=1 webpack --progress --colors modules/HvReactCalendar.js dist/hv-react-calendar.min.js",
     "examples": "webpack-dev-server --config examples/webpack.config.js --no-info --content-base examples",
     "test": "jsxhint . && karma start"
   },
@@ -35,7 +35,9 @@
     "karma-webpack": "~1.5.0",
     "jsx-loader": "~0.12.2",
     "webpack-dev-server": "~1.7.0",
-    "karma": "~0.12.31"
+    "karma": "~0.12.31",
+    "karma-mocha": "~0.1.10",
+    "mocha": "~2.1.0"
   },
   "keywords": [
     "react",
