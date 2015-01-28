@@ -23,6 +23,12 @@ module.exports = {
     libraryTarget: 'var'
   },
 
+  module: {
+    loaders: [
+      { test: /\.js$/, loader: 'jsx-loader?harmony' }
+    ]
+  },
+
   externals: {
     react: 'React'
   },
