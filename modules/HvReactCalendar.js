@@ -56,14 +56,17 @@ var HvReactCalendar = React.createClass({
   },
 
   getMonthName: function() {
-    moment.locale(this.props.locale);
-    return moment.months()[this.state.date.get('month')] + ' ' + this.state.date.get('year');
+    var i18n = moment.localeData(this.props.locale);
+    return i18n.months(this.state.date) + ' ' + this.state.date.get('year');
   },
 
   /* make the days of the week */
   getDaysOfTheWeek: function() {
-    moment.locale(this.props.locale);
-    var weekdays = moment.weekdaysShort();
+    var i18n = moment.localeData(this.props.locale);
+    var weekdays = [];
+    for (var i = 0; i < 7; i++) {
+      weekdays.push(i18n.weekdaysMin(moment().startOf('week').add(i, 'days')));
+    }
     if (this.props.startOfWeek === 'monday') {
       weekdays.push(weekdays.shift());
     }
@@ -84,24 +87,24 @@ var HvReactCalendar = React.createClass({
     }
     if (diff < 0) diff += 7;
 
-    var i;
-    for (var i = 0; i < diff; i++) {
-      var day = moment([this.state.date.year(), this.state.date.month(), i-diff+1]);
-      var classes = 'calendar__cell --prev-month ' + this.getDateClasses(day.format('YYYY-MM-DD'));
+    var i, day, classes;
+    for (i = 0; i < diff; i++) {
+      day = moment([this.state.date.year(), this.state.date.month(), i-diff+1]);
+      classes = 'calendar__cell --prev-month ' + this.getDateClasses(day.format('YYYY-MM-DD'));
       days.push({day: day, classes: classes });
     }
 
     var numberOfDays = date.daysInMonth();
     for (i = 1; i <= numberOfDays; i++) {
-      var day = moment([this.state.date.year(), this.state.date.month(), i]);
-      var classes = this.getDateClasses(day.format('YYYY-MM-DD'));
+      day = moment([this.state.date.year(), this.state.date.month(), i]);
+      classes = 'calendar__cell --this-month ' + this.getDateClasses(day.format('YYYY-MM-DD'));
       days.push({day: day, classes: classes});
     }
 
     i = 1;
     while (days.length % 7 !== 0) {
-      var day = moment([this.state.date.year(), this.state.date.month(), numberOfDays+i]);
-      var classes = 'calendar__cell --next-month ' + this.getDateClasses(day.format('YYYY-MM-DD'));
+      day = moment([this.state.date.year(), this.state.date.month(), numberOfDays+i]);
+      classes = 'calendar__cell --next-month ' + this.getDateClasses(day.format('YYYY-MM-DD'));
       days.push({day: day, classes: classes});
       i++;
     }
@@ -109,7 +112,7 @@ var HvReactCalendar = React.createClass({
     if (this.props.forceSixRows && days.length !== 42) {
       var start = moment(days[days.length-1].day).add(1, 'days');
       while (days.length < 42) {
-        var classes = 'calendar__cell --next-month ' + this.getDateClasses(moment(start).format('YYYY-MM-DD'));
+        classes = 'calendar__cell --next-month ' + this.getDateClasses(moment(start).format('YYYY-MM-DD'));
         days.push({day: moment(start), classes: classes});
         start.add(1, 'days');
       }
