@@ -28,25 +28,27 @@ describe('HvReactCalendar', function() {
 
   describe('interaction', function() {
 
-    it('should go to the next month when next button clicked', function() {
+    it('should go to the next month when next button clicked', function(done) {
       var calendar = TestUtils.renderIntoDocument(createCalendar({currentDate: new Date(2014, 1, 1)}));
       TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__next-btn')[0]);
       var dateLabel = calendar.getDOMNode().getElementsByClassName('calendar__date-display')[0].innerHTML;
       assert.equal(dateLabel, "March 2014");
+      done();
     });
 
-    it('should go to the previous month when the previous button clicked', function() {
+    it('should go to the previous month when the previous button clicked', function(done) {
       var calendar = TestUtils.renderIntoDocument(createCalendar({currentDate: new Date(2014, 1, 1)}));
       TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__prev-btn')[0]);
       var dateLabel = calendar.getDOMNode().getElementsByClassName('calendar__date-display')[0].innerHTML;
       assert.equal(dateLabel, "January 2014");
+      done();
     });
 
   });
 
   describe('props', function() {
 
-    it('should localize when given a locale', function() {
+    it('should localize when given a locale', function(done) {
       var props = {
         currentDate: new Date(2014, 2, 1),
         locale: 'de'
@@ -54,21 +56,24 @@ describe('HvReactCalendar', function() {
       var calendar = TestUtils.renderIntoDocument(createCalendar(props));
       var dateLabel = calendar.getDOMNode().getElementsByClassName('calendar__date-display')[0].innerHTML;
       assert.equal(dateLabel, "März 2014");
+      done();
     });
 
-    it('should allow for Monday to be the start of the week', function() {
+    it('should allow for Monday to be the start of the week', function(done) {
       var calendar = TestUtils.renderIntoDocument(createCalendar({startOfWeek: 'monday'}));
       var dateLabel = calendar.getDOMNode().getElementsByClassName('calendar__head --days-of-week')[0].firstChild.innerHTML;
       assert.equal(dateLabel, "Mo");
+      done();
     });
 
-    it('should allow for explicit setting of current date', function() {
+    it('should allow for explicit setting of current date', function(done) {
       var calendar = TestUtils.renderIntoDocument(createCalendar({currentDate: new Date(2014, 1, 1)}));
       var dateLabel = calendar.getDOMNode().getElementsByClassName('calendar__date-display')[0].innerHTML;
       assert.equal(dateLabel, "February 2014");
+      done();
     });
 
-    it('should allow for the explicit displaying of 6 rows', function() {
+    it('should allow for the explicit displaying of 6 rows', function(done) {
       var props = {
         currentDate: new Date(2014, 1, 1),
         forceSixRows: true
@@ -76,9 +81,10 @@ describe('HvReactCalendar', function() {
       var calendar = TestUtils.renderIntoDocument(createCalendar(props));
       var dayCells = calendar.getDOMNode().getElementsByClassName('calendar__day-label');
       assert.equal(dayCells.length, 42);
+      done();
     });
 
-    it('should apply date classes to specified dates', function() {
+    it('should apply date classes to specified dates', function(done) {
       var props = {
         currentDate: new Date(2014, 1, 1),
         dateClasses: [
@@ -112,9 +118,10 @@ describe('HvReactCalendar', function() {
       TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__next-btn')[0]);
       var case4 = calendar.getDOMNode().getElementsByClassName('cowabunga')[0].firstChild.innerHTML;
       assert.equal(case4, 31);
+      done();
     });
 
-    it('should handle clicks', function() {
+    it('should handle clicks', function(done) {
       var result;
       var props = {
         currentDate: new Date(2014, 1, 1),
@@ -127,6 +134,7 @@ describe('HvReactCalendar', function() {
       assert.equal(result.getFullYear(), 2014);
       assert.equal(result.getMonth(), 1);
       assert.equal(result.getDate(), 11);
+      done();
     });
 
   });
