@@ -1,6 +1,14 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,100,900,200,500,300,600,700,800);
+
+* {
+  font-family: 'Raleway';
+}
+
 .calendar {
   width: 350px;
+  display: inline-block;
   margin-bottom: 20px;
+  margin-left: 20px;
   background: #ffffff;
   border: 1px solid #e3e3e3;
   -webkit-box-sizing: border-box;
@@ -14,6 +22,8 @@
 }
 .calendar__prev-btn {
   width: 14.28571429%;
+  height: 50px;
+  line-height: 50px;
   color: #666666;
   text-align: center;
   float: left;
@@ -25,6 +35,8 @@
 }
 .calendar__next-btn {
   width: 14.28571429%;
+  height: 50px;
+  line-height: 50px;
   color: #666666;
   text-align: center;
   float: left;
@@ -35,8 +47,10 @@
   content: "\f0da";
 }
 .calendar__date-display {
-  color: #38dff2;
   width: 71.42857143%;
+  height: 50px;
+  line-height: 50px;
+  color: #000;
   text-align: center;
   float: left;
 }
@@ -48,6 +62,7 @@
 .calendar__cell {
   width: 14.28571429%;
   height: 50px;
+  line-height: 50px;
   color: #666666;
   border-right: 1px solid #f7f7f7;
   float: left;
@@ -61,7 +76,7 @@
   border: none;
 }
 .calendar__cell:hover {
-  background: #fe386e;
+  background: #666;
   color: #ffffff;
 }
 .calendar__cell.\--day {
@@ -72,22 +87,20 @@
   background: inherit;
   color: #cccccc;
 }
-.calendar__cell.\--disabled {
-  color: #f7f7f7;
+.calendar__cell.\--prev-month,
+.calendar__cell.\--next-month {
+  color: #eeeeee;
 }
-.calendar__cell.\--disabled:hover {
+.calendar__cell.\--prev-month:hover,
+.calendar__cell.\--next-month:hover {
   color: #ffffff;
 }
-.calendar__cell.\--today {
-  color: #38dff2;
+.calendar__cell.yesterday {
+  border-bottom: 4px solid #1A5A7E;
 }
-.calendar__cell.\--today:hover {
-  color: #ffffff;
+.calendar__cell.today {
+  border-bottom: 4px solid #C7CC0C;
 }
-.calendar__cell.\--selected {
-  color: #ffffff;
-  background: #38dff2;
-}
-.calendar__cell.\--selected:hover {
-  background: #fe386e;
+.calendar__cell.tomorrow {
+  border-bottom: 4px solid #7B1F71;
 }

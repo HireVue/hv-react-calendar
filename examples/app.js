@@ -9,6 +9,7 @@ var App = React.createClass({
     var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate()-1);
     var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
     var lastMonth = new Date(now.getFullYear(), now.getMonth()-1, now.getDate());
+    var firstDayNextMonth = new Date(now.getFullYear(), now.getMonth()+1, 1);
 
     var dateClasses = [
       {
@@ -22,8 +23,16 @@ var App = React.createClass({
       {
         date: tomorrow,
         classNames: "tomorrow"
+      },
+      {
+        date: firstDayNextMonth,
+        classNames: "dayOne"
       }
     ];
+
+    function onDateSelect(date) {
+      console.log('You clicked on: ', date);
+    }
 
     return (
       <div>
@@ -33,6 +42,7 @@ var App = React.createClass({
         <HvReactCalendar locale="fr" />
         <HvReactCalendar forceSixRows={true} />
         <HvReactCalendar dateClasses={dateClasses} />
+        <HvReactCalendar onDateSelect={onDateSelect} />
       </div>
     );
 
