@@ -43,5 +43,8 @@
     "react",
     "calendar",
     "widget"
-  ]
+  ],
+  "dependencies": {
+    "moment": "~2.9.0"
+  }
 }
