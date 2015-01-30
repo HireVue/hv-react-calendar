@@ -54,7 +54,6 @@ var HvReactCalendar =
 
 	  propTypes: {
 	    locale       : PropTypes.string,
-	    startOfWeek  : PropTypes.oneOf(['sunday','monday']).isRequired,
 	    currentDate  : PropTypes.instanceOf(Date),
 	    forceSixRows : PropTypes.bool,
 	    dateClasses  : PropTypes.arrayOf(PropTypes.shape({
@@ -67,7 +66,6 @@ var HvReactCalendar =
 	  getDefaultProps: function() {
 	    return {
 	      locale       : 'en',
-	      startOfWeek  : 'sunday',
 	      forceSixRows : false
 	    }
 	  },
@@ -111,8 +109,8 @@ var HvReactCalendar =
 	  getDaysOfTheWeek: function() {
 	    var i18n = moment.localeData(this.props.locale);
 	    var weekdays = [];
-	    for (var i = 0; i < 7; i++) {
-	      weekdays.push(i18n.weekdaysMin(moment().startOf('week').add(i, 'days')));
+	    for (var i = i18n.firstDayOfWeek(); i < 7+i18n.firstDayOfWeek(); i++) {
+	      weekdays.push(i18n.weekdaysMin(moment().weekday(i)));
 	    }
 	    if (this.props.startOfWeek === 'monday') {
 	      weekdays.push(weekdays.shift());
@@ -126,12 +124,10 @@ var HvReactCalendar =
 
 	  /* make the days of the month */
 	  getDays: function() {
+	    var i18n = moment.localeData(this.props.locale);
 	    var days = [];
 	    var date = this.state.date.startOf('month');
-	    var diff = date.weekday();
-	    if (this.props.startOfWeek === 'monday') {
-	      diff -= 1;
-	    }
+	    var diff = date.weekday() - i18n.firstDayOfWeek();
 	    if (diff < 0) diff += 7;
 
 	    var i, day, classes;
@@ -3272,173 +3268,173 @@ var HvReactCalendar =
 	    }
 	}).call(this);
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(84)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(4)(module)))
 
 /***/ },
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 4,
-		"./af.js": 4,
-		"./ar": 8,
-		"./ar-ma": 5,
-		"./ar-ma.js": 5,
-		"./ar-sa": 6,
-		"./ar-sa.js": 6,
-		"./ar-tn": 7,
-		"./ar-tn.js": 7,
-		"./ar.js": 8,
-		"./az": 9,
-		"./az.js": 9,
-		"./be": 10,
-		"./be.js": 10,
-		"./bg": 11,
-		"./bg.js": 11,
-		"./bn": 12,
-		"./bn.js": 12,
-		"./bo": 13,
-		"./bo.js": 13,
-		"./br": 14,
-		"./br.js": 14,
-		"./bs": 15,
-		"./bs.js": 15,
-		"./ca": 16,
-		"./ca.js": 16,
-		"./cs": 17,
-		"./cs.js": 17,
-		"./cv": 18,
-		"./cv.js": 18,
-		"./cy": 19,
-		"./cy.js": 19,
-		"./da": 20,
-		"./da.js": 20,
-		"./de": 22,
-		"./de-at": 21,
-		"./de-at.js": 21,
-		"./de.js": 22,
-		"./el": 23,
-		"./el.js": 23,
-		"./en-au": 24,
-		"./en-au.js": 24,
-		"./en-ca": 25,
-		"./en-ca.js": 25,
-		"./en-gb": 26,
-		"./en-gb.js": 26,
-		"./eo": 27,
-		"./eo.js": 27,
-		"./es": 28,
-		"./es.js": 28,
-		"./et": 29,
-		"./et.js": 29,
-		"./eu": 30,
-		"./eu.js": 30,
-		"./fa": 31,
-		"./fa.js": 31,
-		"./fi": 32,
-		"./fi.js": 32,
-		"./fo": 33,
-		"./fo.js": 33,
-		"./fr": 35,
-		"./fr-ca": 34,
-		"./fr-ca.js": 34,
-		"./fr.js": 35,
-		"./fy": 36,
-		"./fy.js": 36,
-		"./gl": 37,
-		"./gl.js": 37,
-		"./he": 38,
-		"./he.js": 38,
-		"./hi": 39,
-		"./hi.js": 39,
-		"./hr": 40,
-		"./hr.js": 40,
-		"./hu": 41,
-		"./hu.js": 41,
-		"./hy-am": 42,
-		"./hy-am.js": 42,
-		"./id": 43,
-		"./id.js": 43,
-		"./is": 44,
-		"./is.js": 44,
-		"./it": 45,
-		"./it.js": 45,
-		"./ja": 46,
-		"./ja.js": 46,
-		"./ka": 47,
-		"./ka.js": 47,
-		"./km": 48,
-		"./km.js": 48,
-		"./ko": 49,
-		"./ko.js": 49,
-		"./lb": 50,
-		"./lb.js": 50,
-		"./lt": 51,
-		"./lt.js": 51,
-		"./lv": 52,
-		"./lv.js": 52,
-		"./mk": 53,
-		"./mk.js": 53,
-		"./ml": 54,
-		"./ml.js": 54,
-		"./mr": 55,
-		"./mr.js": 55,
-		"./ms-my": 56,
-		"./ms-my.js": 56,
-		"./my": 57,
-		"./my.js": 57,
-		"./nb": 58,
-		"./nb.js": 58,
-		"./ne": 59,
-		"./ne.js": 59,
-		"./nl": 60,
-		"./nl.js": 60,
-		"./nn": 61,
-		"./nn.js": 61,
-		"./pl": 62,
-		"./pl.js": 62,
-		"./pt": 64,
-		"./pt-br": 63,
-		"./pt-br.js": 63,
-		"./pt.js": 64,
-		"./ro": 65,
-		"./ro.js": 65,
-		"./ru": 66,
-		"./ru.js": 66,
-		"./sk": 67,
-		"./sk.js": 67,
-		"./sl": 68,
-		"./sl.js": 68,
-		"./sq": 69,
-		"./sq.js": 69,
-		"./sr": 71,
-		"./sr-cyrl": 70,
-		"./sr-cyrl.js": 70,
-		"./sr.js": 71,
-		"./sv": 72,
-		"./sv.js": 72,
-		"./ta": 73,
-		"./ta.js": 73,
-		"./th": 74,
-		"./th.js": 74,
-		"./tl-ph": 75,
-		"./tl-ph.js": 75,
-		"./tr": 76,
-		"./tr.js": 76,
-		"./tzm": 78,
-		"./tzm-latn": 77,
-		"./tzm-latn.js": 77,
-		"./tzm.js": 78,
-		"./uk": 79,
-		"./uk.js": 79,
-		"./uz": 80,
-		"./uz.js": 80,
-		"./vi": 81,
-		"./vi.js": 81,
-		"./zh-cn": 82,
-		"./zh-cn.js": 82,
-		"./zh-tw": 83,
-		"./zh-tw.js": 83
+		"./af": 5,
+		"./af.js": 5,
+		"./ar": 9,
+		"./ar-ma": 6,
+		"./ar-ma.js": 6,
+		"./ar-sa": 7,
+		"./ar-sa.js": 7,
+		"./ar-tn": 8,
+		"./ar-tn.js": 8,
+		"./ar.js": 9,
+		"./az": 10,
+		"./az.js": 10,
+		"./be": 11,
+		"./be.js": 11,
+		"./bg": 12,
+		"./bg.js": 12,
+		"./bn": 13,
+		"./bn.js": 13,
+		"./bo": 14,
+		"./bo.js": 14,
+		"./br": 15,
+		"./br.js": 15,
+		"./bs": 16,
+		"./bs.js": 16,
+		"./ca": 17,
+		"./ca.js": 17,
+		"./cs": 18,
+		"./cs.js": 18,
+		"./cv": 19,
+		"./cv.js": 19,
+		"./cy": 20,
+		"./cy.js": 20,
+		"./da": 21,
+		"./da.js": 21,
+		"./de": 23,
+		"./de-at": 22,
+		"./de-at.js": 22,
+		"./de.js": 23,
+		"./el": 24,
+		"./el.js": 24,
+		"./en-au": 25,
+		"./en-au.js": 25,
+		"./en-ca": 26,
+		"./en-ca.js": 26,
+		"./en-gb": 27,
+		"./en-gb.js": 27,
+		"./eo": 28,
+		"./eo.js": 28,
+		"./es": 29,
+		"./es.js": 29,
+		"./et": 30,
+		"./et.js": 30,
+		"./eu": 31,
+		"./eu.js": 31,
+		"./fa": 32,
+		"./fa.js": 32,
+		"./fi": 33,
+		"./fi.js": 33,
+		"./fo": 34,
+		"./fo.js": 34,
+		"./fr": 36,
+		"./fr-ca": 35,
+		"./fr-ca.js": 35,
+		"./fr.js": 36,
+		"./fy": 37,
+		"./fy.js": 37,
+		"./gl": 38,
+		"./gl.js": 38,
+		"./he": 39,
+		"./he.js": 39,
+		"./hi": 40,
+		"./hi.js": 40,
+		"./hr": 41,
+		"./hr.js": 41,
+		"./hu": 42,
+		"./hu.js": 42,
+		"./hy-am": 43,
+		"./hy-am.js": 43,
+		"./id": 44,
+		"./id.js": 44,
+		"./is": 45,
+		"./is.js": 45,
+		"./it": 46,
+		"./it.js": 46,
+		"./ja": 47,
+		"./ja.js": 47,
+		"./ka": 48,
+		"./ka.js": 48,
+		"./km": 49,
+		"./km.js": 49,
+		"./ko": 50,
+		"./ko.js": 50,
+		"./lb": 51,
+		"./lb.js": 51,
+		"./lt": 52,
+		"./lt.js": 52,
+		"./lv": 53,
+		"./lv.js": 53,
+		"./mk": 54,
+		"./mk.js": 54,
+		"./ml": 55,
+		"./ml.js": 55,
+		"./mr": 56,
+		"./mr.js": 56,
+		"./ms-my": 57,
+		"./ms-my.js": 57,
+		"./my": 58,
+		"./my.js": 58,
+		"./nb": 59,
+		"./nb.js": 59,
+		"./ne": 60,
+		"./ne.js": 60,
+		"./nl": 61,
+		"./nl.js": 61,
+		"./nn": 62,
+		"./nn.js": 62,
+		"./pl": 63,
+		"./pl.js": 63,
+		"./pt": 65,
+		"./pt-br": 64,
+		"./pt-br.js": 64,
+		"./pt.js": 65,
+		"./ro": 66,
+		"./ro.js": 66,
+		"./ru": 67,
+		"./ru.js": 67,
+		"./sk": 68,
+		"./sk.js": 68,
+		"./sl": 69,
+		"./sl.js": 69,
+		"./sq": 70,
+		"./sq.js": 70,
+		"./sr": 72,
+		"./sr-cyrl": 71,
+		"./sr-cyrl.js": 71,
+		"./sr.js": 72,
+		"./sv": 73,
+		"./sv.js": 73,
+		"./ta": 74,
+		"./ta.js": 74,
+		"./th": 75,
+		"./th.js": 75,
+		"./tl-ph": 76,
+		"./tl-ph.js": 76,
+		"./tr": 77,
+		"./tr.js": 77,
+		"./tzm": 79,
+		"./tzm-latn": 78,
+		"./tzm-latn.js": 78,
+		"./tzm.js": 79,
+		"./uk": 80,
+		"./uk.js": 80,
+		"./uz": 81,
+		"./uz.js": 81,
+		"./vi": 82,
+		"./vi.js": 82,
+		"./zh-cn": 83,
+		"./zh-cn.js": 83,
+		"./zh-tw": 84,
+		"./zh-tw.js": 84
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -3456,6 +3452,22 @@ var HvReactCalendar =
 
 /***/ },
 /* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	}
+
+
+/***/ },
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -3532,7 +3544,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -3595,7 +3607,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -3702,7 +3714,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -3763,7 +3775,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -3903,7 +3915,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -4016,7 +4028,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -4176,7 +4188,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -4270,7 +4282,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -4387,7 +4399,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -4501,7 +4513,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -4616,7 +4628,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -4762,7 +4774,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -4845,7 +4857,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5008,7 +5020,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5075,7 +5087,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5160,7 +5172,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5224,7 +5236,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5304,7 +5316,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5383,7 +5395,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5483,7 +5495,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5553,7 +5565,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5620,7 +5632,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5691,7 +5703,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5768,7 +5780,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5851,7 +5863,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5935,7 +5947,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6003,7 +6015,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6112,7 +6124,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6225,7 +6237,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6289,7 +6301,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6351,7 +6363,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6417,7 +6429,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6492,7 +6504,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6571,7 +6583,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6657,7 +6669,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6784,7 +6796,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6931,7 +6943,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7048,7 +7060,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7172,7 +7184,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7259,7 +7271,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7391,7 +7403,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7465,7 +7477,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7534,7 +7546,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7649,7 +7661,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7711,7 +7723,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7782,7 +7794,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7927,7 +7939,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8053,7 +8065,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8138,7 +8150,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8232,7 +8244,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8307,7 +8319,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8433,7 +8445,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8519,7 +8531,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8614,7 +8626,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 58 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8679,7 +8691,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 59 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8806,7 +8818,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 60 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8881,7 +8893,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 61 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8945,7 +8957,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 62 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9051,7 +9063,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 63 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9115,7 +9127,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 64 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9183,7 +9195,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 65 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9262,7 +9274,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 66 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9444,7 +9456,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 67 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9608,7 +9620,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 68 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9760,7 +9772,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 69 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9833,7 +9845,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 70 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9946,7 +9958,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 71 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10059,7 +10071,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 72 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10130,7 +10142,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 73 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10266,7 +10278,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 74 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10335,7 +10347,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 75 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10401,7 +10413,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10501,7 +10513,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 77 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10563,7 +10575,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 78 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10625,7 +10637,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 79 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10794,7 +10806,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 80 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10856,7 +10868,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 81 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10926,7 +10938,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 82 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -11057,7 +11069,7 @@ var HvReactCalendar =
 
 
 /***/ },
-/* 83 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -11159,22 +11171,6 @@ var HvReactCalendar =
 	        }
 	    });
 	}));
-
-
-/***/ },
-/* 84 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(module) {
-		if(!module.webpackPolyfill) {
-			module.deprecate = function() {};
-			module.paths = [];
-			// module.parent = undefined by default
-			module.children = [];
-			module.webpackPolyfill = 1;
-		}
-		return module;
-	}
 
 
 /***/ }

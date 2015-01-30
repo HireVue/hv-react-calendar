@@ -6,7 +6,6 @@ var HvReactCalendar = require('../HvReactCalendar');
 function createCalendar(props) {
   props              = props              || {};
   props.locale       = props.locale       || 'en';
-  props.startOfWeek  = props.startOfWeek  || 'sunday';
   props.currentDate  = props.currentDate  || null;
   props.forceSixRows = props.forceSixRows || false;
   props.dateClasses  = props.dateClasses  || null;
@@ -15,7 +14,6 @@ function createCalendar(props) {
   return (
     <HvReactCalendar
       locale={props.locale}
-      startOfWeek={props.startOfWeek}
       currentDate={props.currentDate}
       forceSixRows={props.forceSixRows}
       dateClasses={props.dateClasses}
@@ -59,10 +57,14 @@ describe('HvReactCalendar', function() {
       done();
     });
 
-    it('should allow for Monday to be the start of the week', function(done) {
-      var calendar = TestUtils.renderIntoDocument(createCalendar({startOfWeek: 'monday'}));
+    it('should alter first day of week based on locale', function(done) {
+      var props = {
+        currentDate: new Date(2014, 2, 1),
+        locale: 'fr'
+      };
+      var calendar = TestUtils.renderIntoDocument(createCalendar(props));
       var dateLabel = calendar.getDOMNode().getElementsByClassName('calendar__head --days-of-week')[0].firstChild.innerHTML;
-      assert.equal(dateLabel, "Mo");
+      assert.equal(dateLabel, "Lu");
       done();
     });
 

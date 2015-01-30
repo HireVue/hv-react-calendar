@@ -37,7 +37,6 @@ var App = React.createClass({
     return (
       <div>
         <HvReactCalendar />
-        <HvReactCalendar startOfWeek="monday" />
         <HvReactCalendar currentDate={lastMonth} />
         <HvReactCalendar locale="fr" />
         <HvReactCalendar forceSixRows={true} />
