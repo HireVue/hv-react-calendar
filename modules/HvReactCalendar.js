@@ -43,6 +43,10 @@ var HvReactCalendar = React.createClass({
     if (nextProps.dateClasses) {
       this.setState({dateClasses: this.mapDateClasses(nextProps.dateClasses)});
     }
+
+    if (nextProps.currentDate) {
+      this.setState({date: moment(nextProps.currentDate)});
+    }
   },
 
   nextMonth: function() {
