@@ -152,11 +152,6 @@ var HvReactCalendar = React.createClass({
   },
 
   handleClick: function(day) {
-    if (this.props.disablePast && (day < (moment().startOf('day').toDate()))) {
-      /* nothing */
-      return;
-    }
-
     if (this.props.onDateSelect) {
       this.props.onDateSelect(day.toDate());
     }

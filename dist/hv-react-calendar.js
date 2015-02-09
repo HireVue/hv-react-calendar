@@ -120,7 +120,7 @@ var HvReactCalendar =
 	    if (!this.props.disablePast) {
 	      return false;
 	    } else {
-	      var currentDate = this.state.date.toDate()
+	      var currentDate = this.state.date.toDate();
 	      var now         = new Date();
 	      var prevMonth   = new Date(currentDate.getFullYear(), currentDate.getMonth()-1);
 	      if (prevMonth < new Date(now.getFullYear(), now.getMonth())) {
@@ -199,11 +199,6 @@ var HvReactCalendar =
 	  },
 
 	  handleClick: function(day) {
-	    if (this.props.disablePast && (day < (moment().startOf('day').toDate()))) {
-	      /* nothing */
-	      return;
-	    }
-
 	    if (this.props.onDateSelect) {
 	      this.props.onDateSelect(day.toDate());
 	    }
