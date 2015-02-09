@@ -9,6 +9,7 @@ var HvReactCalendar = React.createClass({
     locale       : PropTypes.string,
     currentDate  : PropTypes.instanceOf(Date),
     forceSixRows : PropTypes.bool,
+    disablePast  : PropTypes.bool,
     dateClasses  : PropTypes.arrayOf(PropTypes.shape({
       date       : PropTypes.instanceOf(Date),
       classNames : PropTypes.string
@@ -19,7 +20,8 @@ var HvReactCalendar = React.createClass({
   getDefaultProps: function() {
     return {
       locale       : 'en',
-      forceSixRows : false
+      forceSixRows : false,
+      disablePast  : false
     }
   },
 
@@ -32,7 +34,11 @@ var HvReactCalendar = React.createClass({
 
   componentWillMount: function() {
     if (this.props.currentDate) {
-      this.setState({date: moment(this.props.currentDate)});
+      if (this.props.disablePast && this.props.currentDate < new Date()) {
+        this.setState({date: moment()});
+      } else {
+        this.setState({date: moment(this.props.currentDate)});
+      }
     }
     if (this.props.dateClasses) {
       this.setState({dateClasses: this.mapDateClasses(this.props.dateClasses)});
@@ -45,7 +51,11 @@ var HvReactCalendar = React.createClass({
     }
 
     if (nextProps.currentDate) {
-      this.setState({date: moment(nextProps.currentDate)});
+      if (this.state.disablePast && nextProps.currentDate < new Date()) {
+        this.setState({date: moment()});
+      } else {
+        this.setState({date: moment(nextProps.currentDate)});
+      }
     }
   },
 
@@ -54,7 +64,23 @@ var HvReactCalendar = React.createClass({
   },
 
   prevMonth: function() {
-    this.setState({date: this.state.date.subtract(1, 'months')});
+    if (!this.isLastMonthDisabled()) {
+      this.setState({date: this.state.date.subtract(1, 'months')});
+    }
+  },
+
+  isLastMonthDisabled: function() {
+    if (!this.props.disablePast) {
+      return false;
+    } else {
+      var currentDate = this.state.date.toDate()
+      var now         = new Date();
+      var prevMonth   = new Date(currentDate.getFullYear(), currentDate.getMonth()-1);
+      if (prevMonth < new Date(now.getFullYear(), now.getMonth())) {
+        return true;
+      }
+    }
+    return false;
   },
 
   getMonthName: function() {
@@ -81,10 +107,11 @@ var HvReactCalendar = React.createClass({
 
   /* make the days of the month */
   getDays: function() {
-    var i18n = moment.localeData(this.props.locale);
-    var days = [];
-    var date = this.state.date.startOf('month');
-    var diff = date.weekday() - i18n.firstDayOfWeek();
+    var i18n  = moment.localeData(this.props.locale);
+    var days  = [];
+    var date  = this.state.date.startOf('month');
+    var diff  = date.weekday() - i18n.firstDayOfWeek();
+    var today = (new Date()).getDate();
     if (diff < 0) diff += 7;
 
     var i, day, classes;
@@ -98,6 +125,9 @@ var HvReactCalendar = React.createClass({
     for (i = 1; i <= numberOfDays; i++) {
       day = moment([this.state.date.year(), this.state.date.month(), i]);
       classes = 'calendar__cell --this-month ' + this.getDateClasses(day.format('YYYY-MM-DD'));
+      if (i < today) {
+        classes += ' --past';
+      }
       days.push({day: day, classes: classes});
     }
 
@@ -122,6 +152,11 @@ var HvReactCalendar = React.createClass({
   },
 
   handleClick: function(day) {
+    if (this.props.disablePast && (day < (moment().startOf('day').toDate()))) {
+      /* nothing */
+      return;
+    }
+
     if (this.props.onDateSelect) {
       this.props.onDateSelect(day.toDate());
     }
@@ -153,7 +188,7 @@ var HvReactCalendar = React.createClass({
     return (
       <div className="calendar">
         <div className="calendar__head --controls">
-          <div className="calendar__prev-btn" onClick={this.prevMonth}></div>
+          <div className={"calendar__prev-btn" + (this.isLastMonthDisabled() ? " --disabled" : "") } onClick={this.prevMonth}></div>
           <div className="calendar__date-display">{this.getMonthName()}</div>
           <div className="calendar__next-btn" onClick={this.nextMonth}></div>
         </div>

@@ -7,6 +7,7 @@ function createCalendar(props) {
   props              = props              || {};
   props.locale       = props.locale       || 'en';
   props.currentDate  = props.currentDate  || null;
+  props.disablePast  = props.disablePast  || false;
   props.forceSixRows = props.forceSixRows || false;
   props.dateClasses  = props.dateClasses  || null;
   props.onDateSelect = props.onDateSelect || null;
@@ -15,6 +16,7 @@ function createCalendar(props) {
     <HvReactCalendar
       locale={props.locale}
       currentDate={props.currentDate}
+      disablePast={props.disablePast}
       forceSixRows={props.forceSixRows}
       dateClasses={props.dateClasses}
       onDateSelect={props.onDateSelect}
@@ -136,6 +138,40 @@ describe('HvReactCalendar', function() {
       assert.equal(result.getFullYear(), 2014);
       assert.equal(result.getMonth(), 1);
       assert.equal(result.getDate(), 11);
+      done();
+    });
+
+    it('should show today if set to past date while past is disabled', function(done) {
+      var props = {
+        currentDate: new Date(2014, 0, 1),
+        disablePast: true
+      };
+      var calendar = TestUtils.renderIntoDocument(createCalendar(props));
+      var dateLabel = calendar.getDOMNode().getElementsByClassName('calendar__date-display')[0].innerHTML;
+      assert.equal(dateLabel.substring(dateLabel.length-4), (new Date()).getFullYear());
+      done();
+    });
+
+    it('should prevent from going to the past if the past is disabled', function(done) {
+      var props = {
+        disablePast: true
+      };
+      var calendar = TestUtils.renderIntoDocument(createCalendar(props));
+      TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__prev-btn')[0]);
+      TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__prev-btn')[0]);
+      TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__prev-btn')[0]);
+      TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__prev-btn')[0]);
+      TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__prev-btn')[0]);
+      TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__prev-btn')[0]);
+      TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__prev-btn')[0]);
+      TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__prev-btn')[0]);
+      TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__prev-btn')[0]);
+      TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__prev-btn')[0]);
+      TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__prev-btn')[0]);
+      TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__prev-btn')[0]);
+      TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__prev-btn')[0]);
+      var dateLabel = calendar.getDOMNode().getElementsByClassName('calendar__date-display')[0].innerHTML;
+      assert.equal(dateLabel.substring(dateLabel.length-4), (new Date()).getFullYear());
       done();
     });
 

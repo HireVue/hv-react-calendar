@@ -42,6 +42,7 @@ var App = React.createClass({
         <HvReactCalendar forceSixRows={true} />
         <HvReactCalendar dateClasses={dateClasses} />
         <HvReactCalendar onDateSelect={onDateSelect} />
+        <HvReactCalendar currentDate={lastMonth} disablePast={true} />
       </div>
     );
 
