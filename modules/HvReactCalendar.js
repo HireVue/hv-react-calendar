@@ -51,7 +51,7 @@ var HvReactCalendar = React.createClass({
     }
 
     if (nextProps.currentDate) {
-      if (this.state.disablePast && nextProps.currentDate < new Date()) {
+      if (this.props.disablePast && nextProps.currentDate < new Date()) {
         this.setState({date: moment()});
       } else {
         this.setState({date: moment(nextProps.currentDate)});

@@ -56,6 +56,7 @@ var HvReactCalendar =
 	    locale       : PropTypes.string,
 	    currentDate  : PropTypes.instanceOf(Date),
 	    forceSixRows : PropTypes.bool,
+	    disablePast  : PropTypes.bool,
 	    dateClasses  : PropTypes.arrayOf(PropTypes.shape({
 	      date       : PropTypes.instanceOf(Date),
 	      classNames : PropTypes.string
@@ -66,7 +67,8 @@ var HvReactCalendar =
 	  getDefaultProps: function() {
 	    return {
 	      locale       : 'en',
-	      forceSixRows : false
+	      forceSixRows : false,
+	      disablePast  : false
 	    }
 	  },
 
@@ -79,7 +81,11 @@ var HvReactCalendar =
 
 	  componentWillMount: function() {
 	    if (this.props.currentDate) {
-	      this.setState({date: moment(this.props.currentDate)});
+	      if (this.props.disablePast && this.props.currentDate < new Date()) {
+	        this.setState({date: moment()});
+	      } else {
+	        this.setState({date: moment(this.props.currentDate)});
+	      }
 	    }
 	    if (this.props.dateClasses) {
 	      this.setState({dateClasses: this.mapDateClasses(this.props.dateClasses)});
@@ -90,6 +96,14 @@ var HvReactCalendar =
 	    if (nextProps.dateClasses) {
 	      this.setState({dateClasses: this.mapDateClasses(nextProps.dateClasses)});
 	    }
+
+	    if (nextProps.currentDate) {
+	      if (this.props.disablePast && nextProps.currentDate < new Date()) {
+	        this.setState({date: moment()});
+	      } else {
+	        this.setState({date: moment(nextProps.currentDate)});
+	      }
+	    }
 	  },
 
 	  nextMonth: function() {
@@ -97,7 +111,23 @@ var HvReactCalendar =
 	  },
 
 	  prevMonth: function() {
-	    this.setState({date: this.state.date.subtract(1, 'months')});
+	    if (!this.isLastMonthDisabled()) {
+	      this.setState({date: this.state.date.subtract(1, 'months')});
+	    }
+	  },
+
+	  isLastMonthDisabled: function() {
+	    if (!this.props.disablePast) {
+	      return false;
+	    } else {
+	      var currentDate = this.state.date.toDate()
+	      var now         = new Date();
+	      var prevMonth   = new Date(currentDate.getFullYear(), currentDate.getMonth()-1);
+	      if (prevMonth < new Date(now.getFullYear(), now.getMonth())) {
+	        return true;
+	      }
+	    }
+	    return false;
 	  },
 
 	  getMonthName: function() {
@@ -124,10 +154,11 @@ var HvReactCalendar =
 
 	  /* make the days of the month */
 	  getDays: function() {
-	    var i18n = moment.localeData(this.props.locale);
-	    var days = [];
-	    var date = this.state.date.startOf('month');
-	    var diff = date.weekday() - i18n.firstDayOfWeek();
+	    var i18n  = moment.localeData(this.props.locale);
+	    var days  = [];
+	    var date  = this.state.date.startOf('month');
+	    var diff  = date.weekday() - i18n.firstDayOfWeek();
+	    var today = (new Date()).getDate();
 	    if (diff < 0) diff += 7;
 
 	    var i, day, classes;
@@ -141,6 +172,9 @@ var HvReactCalendar =
 	    for (i = 1; i <= numberOfDays; i++) {
 	      day = moment([this.state.date.year(), this.state.date.month(), i]);
 	      classes = 'calendar__cell --this-month ' + this.getDateClasses(day.format('YYYY-MM-DD'));
+	      if (i < today) {
+	        classes += ' --past';
+	      }
 	      days.push({day: day, classes: classes});
 	    }
 
@@ -165,6 +199,11 @@ var HvReactCalendar =
 	  },
 
 	  handleClick: function(day) {
+	    if (this.props.disablePast && (day < (moment().startOf('day').toDate()))) {
+	      /* nothing */
+	      return;
+	    }
+
 	    if (this.props.onDateSelect) {
 	      this.props.onDateSelect(day.toDate());
 	    }
@@ -196,7 +235,7 @@ var HvReactCalendar =
 	    return (
 	      React.createElement("div", {className: "calendar"}, 
 	        React.createElement("div", {className: "calendar__head --controls"}, 
-	          React.createElement("div", {className: "calendar__prev-btn", onClick: this.prevMonth}), 
+	          React.createElement("div", {className: "calendar__prev-btn" + (this.isLastMonthDisabled() ? " --disabled" : ""), onClick: this.prevMonth}), 
 	          React.createElement("div", {className: "calendar__date-display"}, this.getMonthName()), 
 	          React.createElement("div", {className: "calendar__next-btn", onClick: this.nextMonth})
 	        ), 
