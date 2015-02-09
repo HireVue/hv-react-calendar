@@ -73,7 +73,7 @@ var HvReactCalendar = React.createClass({
     if (!this.props.disablePast) {
       return false;
     } else {
-      var currentDate = this.state.date.toDate()
+      var currentDate = this.state.date.toDate();
       var now         = new Date();
       var prevMonth   = new Date(currentDate.getFullYear(), currentDate.getMonth()-1);
       if (prevMonth < new Date(now.getFullYear(), now.getMonth())) {
