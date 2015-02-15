@@ -1,7 +1,7 @@
 var assert          = require('assert');
 var React           = require('react/addons');
 var TestUtils       = React.addons.TestUtils;
-var HvReactCalendar = require('../HvReactCalendar');
+var HvReactCalendar = require('../HvReactCalendar.jsx');
 
 function createCalendar(props) {
   props              = props              || {};

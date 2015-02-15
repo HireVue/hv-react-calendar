@@ -6,7 +6,7 @@ module.exports = {
   devtool: 'inline-source-map',
 
   entry: {
-    example: path.join(__dirname, 'app.js')
+    example: path.join(__dirname, 'app.jsx')
   },
 
   output: {
@@ -18,13 +18,13 @@ module.exports = {
 
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'jsx-loader?harmony' }
+      { test: /\.jsx$/, loader: 'jsx-loader?harmony' }
     ]
   },
 
   resolve: {
     alias: {
-      'hv-react-calendar': '../modules/HvReactCalendar'
+      'hv-react-calendar': '../modules/HvReactCalendar.jsx'
     }
   },
 

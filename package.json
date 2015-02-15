@@ -15,8 +15,8 @@
     "example": "examples"
   },
   "scripts": {
-    "build": "NODE_ENV=production webpack --progress --colors modules/HvReactCalendar.js dist/hv-react-calendar.js",
-    "build-min": "NODE_ENV=production COMPRESS=1 webpack --progress --colors modules/HvReactCalendar.js dist/hv-react-calendar.min.js",
+    "build": "NODE_ENV=production webpack --progress --colors modules/HvReactCalendar.jsx dist/hv-react-calendar.js",
+    "build-min": "NODE_ENV=production COMPRESS=1 webpack --progress --colors modules/HvReactCalendar.jsx dist/hv-react-calendar.min.js",
     "examples": "webpack-dev-server --config examples/webpack.config.js --no-info --content-base examples",
     "test": "jsxhint . && karma start"
   },
