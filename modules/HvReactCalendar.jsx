@@ -6,15 +6,16 @@ var PropTypes = React.PropTypes;
 var HvReactCalendar = React.createClass({
 
   propTypes: {
-    locale       : PropTypes.string,
-    currentDate  : PropTypes.instanceOf(Date),
-    forceSixRows : PropTypes.bool,
-    disablePast  : PropTypes.bool,
-    dateClasses  : PropTypes.arrayOf(PropTypes.shape({
-      date       : PropTypes.instanceOf(Date),
-      classNames : PropTypes.string
+    locale        : PropTypes.string,
+    currentDate   : PropTypes.instanceOf(Date),
+    forceSixRows  : PropTypes.bool,
+    disablePast   : PropTypes.bool,
+    dateClasses   : PropTypes.arrayOf(PropTypes.shape({
+      date        : PropTypes.instanceOf(Date),
+      classNames  : PropTypes.string
     })),
-    onDateSelect : PropTypes.func
+    onDateSelect  : PropTypes.func,
+    onMonthChange : PropTypes.func
   },
 
   getDefaultProps: function() {
@@ -61,11 +62,17 @@ var HvReactCalendar = React.createClass({
 
   nextMonth: function() {
     this.setState({date: this.state.date.add(1, 'months')});
+    if (this.props.onMonthChange) {
+      this.props.onMonthChange(moment(this.state.date).startOf('month').toDate());
+    }
   },
 
   prevMonth: function() {
     if (!this.isLastMonthDisabled()) {
       this.setState({date: this.state.date.subtract(1, 'months')});
+      if (this.props.onMonthChange) {
+        this.props.onMonthChange(moment(this.state.date).startOf('month').toDate());
+      }
     }
   },
 

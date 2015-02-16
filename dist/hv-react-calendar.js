@@ -53,15 +53,16 @@ var HvReactCalendar =
 	var HvReactCalendar = React.createClass({displayName: "HvReactCalendar",
 
 	  propTypes: {
-	    locale       : PropTypes.string,
-	    currentDate  : PropTypes.instanceOf(Date),
-	    forceSixRows : PropTypes.bool,
-	    disablePast  : PropTypes.bool,
-	    dateClasses  : PropTypes.arrayOf(PropTypes.shape({
-	      date       : PropTypes.instanceOf(Date),
-	      classNames : PropTypes.string
+	    locale        : PropTypes.string,
+	    currentDate   : PropTypes.instanceOf(Date),
+	    forceSixRows  : PropTypes.bool,
+	    disablePast   : PropTypes.bool,
+	    dateClasses   : PropTypes.arrayOf(PropTypes.shape({
+	      date        : PropTypes.instanceOf(Date),
+	      classNames  : PropTypes.string
 	    })),
-	    onDateSelect : PropTypes.func
+	    onDateSelect  : PropTypes.func,
+	    onMonthChange : PropTypes.func
 	  },
 
 	  getDefaultProps: function() {
@@ -108,11 +109,17 @@ var HvReactCalendar =
 
 	  nextMonth: function() {
 	    this.setState({date: this.state.date.add(1, 'months')});
+	    if (this.props.onMonthChange) {
+	      this.props.onMonthChange(moment(this.state.date).startOf('month').toDate());
+	    }
 	  },
 
 	  prevMonth: function() {
 	    if (!this.isLastMonthDisabled()) {
 	      this.setState({date: this.state.date.subtract(1, 'months')});
+	      if (this.props.onMonthChange) {
+	        this.props.onMonthChange(moment(this.state.date).startOf('month').toDate());
+	      }
 	    }
 	  },
 
@@ -163,14 +170,14 @@ var HvReactCalendar =
 
 	    var i, day, classes;
 	    for (i = 0; i < diff; i++) {
-	      day = moment([this.state.date.year(), this.state.date.month(), i-diff+1]);
+	      day = moment().set({year: this.state.date.year(), month: this.state.date.month(), date: i-diff+1});
 	      classes = 'calendar__cell --prev-month ' + this.getDateClasses(day.format('YYYY-MM-DD'));
 	      days.push({day: day, classes: classes });
 	    }
 
 	    var numberOfDays = date.daysInMonth();
 	    for (i = 1; i <= numberOfDays; i++) {
-	      day = moment([this.state.date.year(), this.state.date.month(), i]);
+	      day = moment().set({year: this.state.date.year(), month: this.state.date.month(), date: i});
 	      classes = 'calendar__cell --this-month ' + this.getDateClasses(day.format('YYYY-MM-DD'));
 	      if (i < today) {
 	        classes += ' --past';
@@ -180,7 +187,7 @@ var HvReactCalendar =
 
 	    i = 1;
 	    while (days.length % 7 !== 0) {
-	      day = moment([this.state.date.year(), this.state.date.month(), numberOfDays+i]);
+	      day = moment().set({year: this.state.date.year(), month: this.state.date.month(), date: numberOfDays+i});
 	      classes = 'calendar__cell --next-month ' + this.getDateClasses(day.format('YYYY-MM-DD'));
 	      days.push({day: day, classes: classes});
 	      i++;

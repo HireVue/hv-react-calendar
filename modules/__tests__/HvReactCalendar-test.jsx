@@ -4,13 +4,14 @@ var TestUtils       = React.addons.TestUtils;
 var HvReactCalendar = require('../HvReactCalendar.jsx');
 
 function createCalendar(props) {
-  props              = props              || {};
-  props.locale       = props.locale       || 'en';
-  props.currentDate  = props.currentDate  || null;
-  props.disablePast  = props.disablePast  || false;
-  props.forceSixRows = props.forceSixRows || false;
-  props.dateClasses  = props.dateClasses  || null;
-  props.onDateSelect = props.onDateSelect || null;
+  props               = props               || {};
+  props.locale        = props.locale        || 'en';
+  props.currentDate   = props.currentDate   || null;
+  props.disablePast   = props.disablePast   || false;
+  props.forceSixRows  = props.forceSixRows  || false;
+  props.dateClasses   = props.dateClasses   || null;
+  props.onDateSelect  = props.onDateSelect  || null;
+  props.onMonthChange = props.onMonthChange || null;
 
   return (
     <HvReactCalendar
@@ -20,6 +21,7 @@ function createCalendar(props) {
       forceSixRows={props.forceSixRows}
       dateClasses={props.dateClasses}
       onDateSelect={props.onDateSelect}
+      onMonthChange={props.onMonthChange}
     />
   );
 }
@@ -138,6 +140,22 @@ describe('HvReactCalendar', function() {
       assert.equal(result.getFullYear(), 2014);
       assert.equal(result.getMonth(), 1);
       assert.equal(result.getDate(), 11);
+      done();
+    });
+
+    it('should handle month changes', function(done) {
+      var result;
+      var props = {
+        currentDate: new Date(2014, 1, 1),
+        onMonthChange: function(date) {
+          result = date;
+        }
+      };
+      var calendar = TestUtils.renderIntoDocument(createCalendar(props));
+      TestUtils.Simulate.click(calendar.getDOMNode().getElementsByClassName('calendar__next-btn')[0]);
+      assert.equal(result.getFullYear(), 2014);
+      assert.equal(result.getMonth(), 2);
+      assert.equal(result.getDate(), 1);
       done();
     });
 

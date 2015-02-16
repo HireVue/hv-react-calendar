@@ -34,6 +34,10 @@ var App = React.createClass({
       console.log('You clicked on: ', date);
     }
 
+    function onMonthChange(date) {
+      console.log('You changed to this month: ', date);
+    }
+
     return (
       <div>
         <HvReactCalendar />
@@ -43,6 +47,7 @@ var App = React.createClass({
         <HvReactCalendar dateClasses={dateClasses} />
         <HvReactCalendar onDateSelect={onDateSelect} />
         <HvReactCalendar currentDate={lastMonth} disablePast={true} />
+        <HvReactCalendar onMonthChange={onMonthChange} />
       </div>
     );
 
