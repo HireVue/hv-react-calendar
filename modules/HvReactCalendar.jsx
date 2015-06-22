@@ -2,6 +2,11 @@ var moment    = require('moment');
 var React     = require('react');
 var PropTypes = React.PropTypes;
 
+var defaultProps = {
+    locale       : 'en',
+    forceSixRows : false,
+    disablePast  : false
+};
 
 var HvReactCalendar = React.createClass({
 
@@ -19,11 +24,7 @@ var HvReactCalendar = React.createClass({
   },
 
   getDefaultProps: function() {
-    return {
-      locale       : 'en',
-      forceSixRows : false,
-      disablePast  : false
-    }
+      return defaultProps;
   },
 
   getInitialState: function() {
@@ -90,14 +91,18 @@ var HvReactCalendar = React.createClass({
     return false;
   },
 
+  i18n: function() {
+      return moment.localeData(this.props.locale) ||
+             moment.localeData(defaultProps.locale);
+  },
+
   getMonthName: function() {
-    var i18n = moment.localeData(this.props.locale);
-    return i18n.months(this.state.date) + ' ' + this.state.date.get('year');
+    return this.i18n().months(this.state.date) + ' ' + this.state.date.get('year');
   },
 
   /* make the days of the week */
   getDaysOfTheWeek: function() {
-    var i18n = moment.localeData(this.props.locale);
+    var i18n = this.i18n()
     var weekdays = [];
     for (var i = i18n.firstDayOfWeek(); i < 7+i18n.firstDayOfWeek(); i++) {
       weekdays.push(i18n.weekdaysMin(moment().weekday(i)));
@@ -114,10 +119,9 @@ var HvReactCalendar = React.createClass({
 
   /* make the days of the month */
   getDays: function() {
-    var i18n  = moment.localeData(this.props.locale);
     var days  = [];
     var date  = this.state.date.startOf('month');
-    var diff  = date.weekday() - i18n.firstDayOfWeek();
+    var diff  = date.weekday() - this.i18n().firstDayOfWeek();
     var today = (new Date()).getDate();
     if (diff < 0) diff += 7;
 
