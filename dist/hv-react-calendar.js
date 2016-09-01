@@ -2,41 +2,41 @@ var HvReactCalendar =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
@@ -49,6 +49,11 @@ var HvReactCalendar =
 	var React     = __webpack_require__(2);
 	var PropTypes = React.PropTypes;
 
+	var defaultProps = {
+	    locale       : 'en',
+	    forceSixRows : false,
+	    disablePast  : false
+	};
 
 	var HvReactCalendar = React.createClass({displayName: "HvReactCalendar",
 
@@ -66,11 +71,7 @@ var HvReactCalendar =
 	  },
 
 	  getDefaultProps: function() {
-	    return {
-	      locale       : 'en',
-	      forceSixRows : false,
-	      disablePast  : false
-	    }
+	      return defaultProps;
 	  },
 
 	  getInitialState: function() {
@@ -98,7 +99,7 @@ var HvReactCalendar =
 	      this.setState({dateClasses: this.mapDateClasses(nextProps.dateClasses)});
 	    }
 
-	    if (nextProps.currentDate) {
+	    if (nextProps.currentDate && nextProps.currentDate !== this.props.currentDate) {
 	      if (this.props.disablePast && nextProps.currentDate < new Date()) {
 	        this.setState({date: moment()});
 	      } else {
@@ -137,14 +138,18 @@ var HvReactCalendar =
 	    return false;
 	  },
 
+	  i18n: function() {
+	      return moment.localeData(this.props.locale) ||
+	             moment.localeData(defaultProps.locale);
+	  },
+
 	  getMonthName: function() {
-	    var i18n = moment.localeData(this.props.locale);
-	    return i18n.months(this.state.date) + ' ' + this.state.date.get('year');
+	    return this.i18n().months(this.state.date) + ' ' + this.state.date.get('year');
 	  },
 
 	  /* make the days of the week */
 	  getDaysOfTheWeek: function() {
-	    var i18n = moment.localeData(this.props.locale);
+	    var i18n = this.i18n()
 	    var weekdays = [];
 	    for (var i = i18n.firstDayOfWeek(); i < 7+i18n.firstDayOfWeek(); i++) {
 	      weekdays.push(i18n.weekdaysMin(moment().weekday(i)));
@@ -161,10 +166,9 @@ var HvReactCalendar =
 
 	  /* make the days of the month */
 	  getDays: function() {
-	    var i18n  = moment.localeData(this.props.locale);
 	    var days  = [];
 	    var date  = this.state.date.startOf('month');
-	    var diff  = date.weekday() - i18n.firstDayOfWeek();
+	    var diff  = date.weekday() - this.i18n().firstDayOfWeek();
 	    var today = (new Date()).getDate();
 	    if (diff < 0) diff += 7;
 
@@ -257,15 +261,15 @@ var HvReactCalendar =
 
 /***/ },
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = moment;
 
 /***/ },
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = React;
 
 /***/ }
-/******/ ])
+/******/ ]);
