@@ -44,7 +44,7 @@
     "widget"
   ],
   "dependencies": {
-    "react": "0.12.2",
-    "moment": "2.9.0"
+    "moment": "^2.14.1",
+    "react": "0.12.2"
   }
 }
